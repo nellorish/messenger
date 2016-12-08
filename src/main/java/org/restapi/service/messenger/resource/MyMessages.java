@@ -2,9 +2,7 @@ package org.restapi.service.messenger.resource;
 
 import java.util.List;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
 import org.restapi.service.messenger.model.Message;
@@ -24,11 +22,41 @@ public class MyMessages {
 //	}
 	
 	@GET
-	@Produces(MediaType.APPLICATION_XML)
+	@Produces(MediaType.APPLICATION_JSON)
 	public List<Message> getXMLMessages(){
 		return messageService.getAllMessages();
 	}
-	
-	
+
+	@GET
+	@Path("/{messageID}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Message test(@PathParam("messageID") long messageID){
+		return messageService.getMessage(messageID);
+	}
+
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Message addMessage(Message message){
+
+		return messageService.addMessage(message);
+	}
+
+
+	@PUT
+	@Path("/{messageID}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Message addMessage(@PathParam("messageID") long messageID, Message message){
+         message.setId(messageID);
+		return messageService.addMessage(message);
+	}
+
+	@DELETE
+	@Path("/{messageID}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public void deleteMessage(@PathParam("messageID") long messageID){
+           messageService.remaveMessage(messageID);
+	}
 
 }
