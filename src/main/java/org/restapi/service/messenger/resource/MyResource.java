@@ -1,4 +1,4 @@
-package org.restapi.service.messenger;
+package org.restapi.service.messenger.resource;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
