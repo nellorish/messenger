@@ -57,6 +57,7 @@ public class Profile {
 
     public Profile(long id, String profileName,String firstName,String lastName){
         this.id=id;
+        this.profileName=profileName;
         this.firdtName=firstName;
         this.lastName=lastName;
         this.created= new Date();
