@@ -16,19 +16,19 @@ public class MyMessages {
 	
 	public MessageService messageService = new MessageService();
 	
+//	@GET
+//	@Produces(MediaType.TEXT_PLAIN)
+//	public String getMessages(){
+//		
+//		return "Hi, Welcome to RestAPI";
+//	}
+	
 	@GET
-	@Produces(MediaType.TEXT_PLAIN)
-	public String getMessages(){
-		
-		return "Hi, Welcome to RestAPI";
+	@Produces(MediaType.APPLICATION_XML)
+	public List<Message> getXMLMessages(){
+		return messageService.getAllMessages();
 	}
 	
-//	@GET
-//	@Produces(MediaType.APPLICATION_XML)
-//	public List<Message> getXMLMessages(){
-//		return messageService.getAllMessages();
-//	}
-//	
 	
 
 }
