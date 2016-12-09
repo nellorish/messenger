@@ -1,12 +1,13 @@
 package org.restapi.service.messenger.model;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
-
-
+import javax.xml.bind.annotation.XmlTransient;
 
 
 @XmlRootElement
@@ -17,6 +18,10 @@ public class Message {
 	public String message;
 	public String author;
 	public Date created;
+
+
+
+	private Map<Long,Comment> comments = new HashMap<>();
 	
 	public Message(){
 		
@@ -54,8 +59,15 @@ public long getId() {
 	public void setCreated(Date created) {
 		this.created = created;
 	}
-	
-	
+
+	@XmlTransient
+	public Map<Long, Comment> getComments() {
+		return comments;
+	}
+
+	public void setComments(Map<Long, Comment> comments) {
+		this.comments = comments;
+	}
 	
 	
 }

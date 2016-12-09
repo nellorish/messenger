@@ -1,6 +1,7 @@
 package org.restapi.service.messenger.service;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
@@ -54,6 +55,26 @@ public class MessageService {
 	public void remaveMessage(long id){
 
 		 messages.remove(id);
+	}
+
+	public List<Message> getMessagesForYear(int year){
+		List<Message> messageinYear= new ArrayList<>();
+		Calendar cal = Calendar.getInstance();
+		 for(Message message : messages.values()){
+			 cal.setTime(message.getCreated());
+
+			 if(cal.get(Calendar.YEAR)==year){
+				 messageinYear.add(message);
+			 }
+		 }
+		return messageinYear;
+	}
+
+	public List<Message> getAllMessagesPaginated(int start, int size){
+		List<Message> messaageList = new ArrayList<>(messages.size());
+		if(start+size> messaageList.size()) return new ArrayList<Message>();
+
+		return messaageList.subList(start,start+size);
 	}
 
 

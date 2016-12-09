@@ -5,10 +5,13 @@ import java.util.List;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
+import org.restapi.service.messenger.bean.BeanParamFilter;
 import org.restapi.service.messenger.model.Message;
 import org.restapi.service.messenger.service.MessageService;
 
 @Path("/messages")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 public class MyMessages {
 	
 	
@@ -21,22 +24,32 @@ public class MyMessages {
 //		return "Hi, Welcome to RestAPI";
 //	}
 	
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	public List<Message> getXMLMessages(){
-		return messageService.getAllMessages();
-	}
+//	@GET
+//
+//	public List<Message> getXMLMessages(){
+//		return messageService.getAllMessages();
+//	}
 
 	@GET
-	@Path("/{messageID}")
 	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/{messageID}")
 	public Message test(@PathParam("messageID") long messageID){
 		return messageService.getMessage(messageID);
 	}
 
+	@GET
+	public List<Message> getAllpaginationMessages(@BeanParam BeanParamFilter params){
+
+		if(params.getYear()>0){
+			return messageService.getMessagesForYear(params.getYear());
+		}
+//		if(start>=0&&size>=0){
+//		  return messageService.getAllMessagesPaginated(start,size);
+//		}
+		return messageService.getAllMessages();
+	}
+
 	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
 	public Message addMessage(Message message){
 
 		return messageService.addMessage(message);
@@ -45,8 +58,6 @@ public class MyMessages {
 
 	@PUT
 	@Path("/{messageID}")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
 	public Message addMessage(@PathParam("messageID") long messageID, Message message){
          message.setId(messageID);
 		return messageService.addMessage(message);
@@ -54,9 +65,15 @@ public class MyMessages {
 
 	@DELETE
 	@Path("/{messageID}")
-	@Produces(MediaType.APPLICATION_JSON)
 	public void deleteMessage(@PathParam("messageID") long messageID){
            messageService.remaveMessage(messageID);
+	}
+
+
+	@Path("/{messageID}/comments")
+	public CommentsResource getCommentResource(){
+
+		return new CommentsResource();
 	}
 
 }
